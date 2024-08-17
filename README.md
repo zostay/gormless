@@ -15,10 +15,14 @@ For a reminder of what SQL injection is, see XKCD's [Exploits of a Mom](https://
 
 ![A comic about a mom who destroys the school database because she named her boy "Robert'); DROP TABLE Students;--"](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)
 
-That's not, of course, how the devs see it, but I believe they are simply wrong.
-SQL injection is an obvious issue with a method like `db.Where` or `db.Raw`
-where you know you're writing a raw SQL query. But what you don't expect is
-something like this to be vulnerable:
+The gorm devs do not consider this to be a vulnerability, but they are simply 
+wrong. SQL injection is an obvious issue with a method like `db.Where` or 
+`db.Raw` where you know you're writing a raw SQL query. If these were the
+methods we were talking about, I have concerns to make sure devs use them
+carefully, but I wouldn't say they are inherently vulnerable.
+
+However, if you have a method that is safe under some circumstances, but not
+under others, that is a vulnerability. Consider the following program:
 
 ```go
 // BAD CODE DO NOT USE!!!
@@ -70,8 +74,9 @@ The most strident commentary when this issue is raised
 was, ["Absolutely, this is bad API design, but it's not a vulnerability."](https://github.com/go-gorm/gorm/issues/2517#issuecomment-638459166). The Gorm devs' solution
 was to provide the security page linked above. That's not a solution. That's
 negligence. I've given talks on the OWASP Top 10 for more than a decade. This
-exact problem remains one of the top issues in applications today for all this
-time because devs don't take it seriously.
+exact problem, code injection generally and SQL injection particularly, remains 
+one of the top issues in applications today for all this time because devs like
+those working on Gorm have continually avoided taking it seriously.
 
 Regarding this being bad API design and not a vulnerability, I quote Dwight 
 Schrute, "False." It ceases to be bad API design when you realize 
@@ -104,6 +109,17 @@ you can call `Unsafe()` on the `Gormless` object.
 
 This package is built using code generation using reflection, so it should be
 able to keep up with Gorm's changes. If it doesn't, please file an issue.
+
+This solution is absolutely overkill. It's a sledgehammer to a nail. All that
+really needs to be fixed to resolve the major issue is the `First`, `Find`, and
+other methods that might be safe sometimes, but not all the time. On the other
+hande, `safesql` is a brilliantly simple solution to add in, so why not?
+
+# Patches Welcome
+
+If there's something you cannot do with this library in place without
+calling `Unsafe()` that you believe is safe. Please submit a PR and I will 
+happily add it in, so long as it doesn't reintroduce the vulnerability.
 
 # Installation
 
