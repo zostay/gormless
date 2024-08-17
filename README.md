@@ -11,6 +11,10 @@ If you read the Gorm documentation carefully (and you absolutely should because
 of this problem), you will find the [Security](https://gorm.io/docs/security.html)
 page. On it, it is revealed that SQL injection is considered a feature of Gorm.
 
+For a reminder of what SQL injection is, see XKCD's [Exploits of a Mom](https://xkcd.com/327/).
+
+![A comic about a mom who destroys the school database because she named her boy "Robert'); DROP TABLE Students;--"](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)
+
 That's not, of course, how the devs see it, but I believe they are simply wrong.
 SQL injection is an obvious issue with a method like `db.Where` or `db.Raw`
 where you know you're writing a raw SQL query. But what you don't expect is
