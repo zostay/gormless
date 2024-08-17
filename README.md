@@ -170,6 +170,13 @@ func main() {
 }
 ```
 
+# Callback Support
+
+This library is unable to support the `gorm.DB.Callback` method. This is due to
+the fact that that method returns a private type, so it can't be wrapped in a
+straight-forward fashion. Anyway, I can think of a few workarounds, but I just
+want to highlight here that lack of callback support is deliberate at this time.
+
 # License
 
 Copyright © 2024 Qubling LLC
