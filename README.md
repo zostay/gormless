@@ -90,7 +90,7 @@ treat it as a raw SQL query.
 
 That is the absolute definition of a SQL injection vulnerability. If the input 
 is safe some of the time, but not all of the, that's SQL injection. They have
-created the illusion of safety. Period. There's not even an opinion, but clear 
+created the illusion of safety. Period. That's not even an opinion, but clear 
 fact, as far as I'm concerned.
 
 To me, part of the purpose of using an ORM rather than raw SQL and a language 
