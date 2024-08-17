@@ -100,7 +100,7 @@ like Go instead of C is to avoid footguns as big as this one. So...
 
 Since the authors of Gorm seem unwilling to fix this or to even admit that need
 a v3 that obliterate this "bad API design." I have created this library named
-Gormless. I'll you interpret the name as you will.
+Gormless. I'll let you interpret the name as you will.
 
 This is a straight up wrapper of `gorm.DB` that adds in the powers
 of `google.com/go-safeweb/safesql`
