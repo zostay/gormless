@@ -1,0 +1,3 @@
+func (db *DB) {{.Method.Name}}({{.PreArgs}}{{if .PreArgs}}, {{end}}s *safesql.TrustedSQLString, arg interface{}) *DB {
+    return &DB{unsafe: db.unsafe.{{.Method.Name}}({{.PrePassthru}}{{if .PrePassthru}}, {{end}}s.String(), arg)}
+}

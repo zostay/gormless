@@ -1,0 +1,3 @@
+func (db *DB) {{.Method.Name}}({{.Args}}) {{.Returns}} {
+    {{if .Returns}}return {{end}}db.unsafe.{{.Method.Name}}({{.Passthru}})
+}

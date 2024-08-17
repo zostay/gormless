@@ -1,0 +1,7 @@
+func (db *DB) {{.Method.Name}}(args ...*safesql.TrustedSQLString) *DB {
+    passthru := make([]interface{}, len(args))
+    for i, arg := range args {
+        passthru[i] = arg.String()
+    }
+    return &DB{unsafe: db.unsafe.{{.Method.Name}}(passthru...)}
+}

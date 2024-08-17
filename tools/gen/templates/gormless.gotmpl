@@ -1,0 +1,26 @@
+// {{.AutoGenWarning}}
+
+package gormless
+
+//go:generate go run ./tools/gen/main.go
+
+import (
+{{range .Imports}}    "{{.}}"
+{{end}}
+)
+
+type DB struct {
+    unsafe *gorm.DB
+}
+
+func New(unsafe *gorm.DB) *DB {
+    return &DB{unsafe}
+}
+
+func (db *DB) Unsafe() *gorm.DB {
+    log.Print("UNSAFE: Calling the Unsafe() method is unsafe and should be avoided.")
+    return db.unsafe
+}
+
+{{range .Methods}}{{.}}
+{{end}}

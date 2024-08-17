@@ -1,0 +1,3 @@
+func (db *DB) {{.Name}}() {{.Type.String}} {
+    return db.unsafe.{{.Name}}
+}
