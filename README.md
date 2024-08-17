@@ -105,7 +105,7 @@ Gormless. I'll let you interpret the name as you will.
 This is a straight up wrapper of `gorm.DB` that adds in the powers
 of `google.com/go-safeweb/safesql`
 and neuters the unsafe syntax. If you want to get back to the unsafe syntax,
-you can call `Unsafe()` on the `Gormless` object.
+you can call `Unsafe()` on the `gormless.DB` object.
 
 This package is built using code generation using reflection, so it should be
 able to keep up with Gorm's changes. If it doesn't, please file an issue.
