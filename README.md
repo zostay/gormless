@@ -1,4 +1,4 @@
-# README
+# Gormless
 
 This is such an obvious idea that I'm sure it's been done, but I can't find it.
 Gorm Gen will help get you some of the safety that this gives, but this gives it 
