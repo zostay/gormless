@@ -23,8 +23,8 @@ package main
 
 import (
     "fmt"
-	"os"
-	
+    "os"
+
     "gorm.io/driver/sqlite"
     "gorm.io/gorm"
 )
@@ -35,22 +35,22 @@ type User struct {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+    if len(os.Args) != 2 {
         fmt.Println("usage: ", os.Args[0], " <id>")
         os.Exit(1)
-	}
-	
+    }
+
     db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
     if err != nil {
         panic("failed to connect database: " + err.Error())
     }
-	
-	// VERY BAD CODE HERE!!! DO NOT USE!!!
-	var u User
+
+    // VERY BAD CODE HERE!!! DO NOT USE!!!
+    var u User
     err = db.First(&u, os.Args[1]).Error // <=== VULNERABILITY HERE
     if err != nil {
         panic("failed to read user: " + err.Error())
-    }	
+    }
 }
 ```
 
@@ -142,9 +142,9 @@ func main() {
     if err != nil {
         panic("failed to read user: " + err.Error())
     }   
-	
+
     // OR the above could be written using google.com/go-safeweb/safesql
-	// err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error
+    // err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error
 }
 ```
 
