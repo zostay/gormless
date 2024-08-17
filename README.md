@@ -51,6 +51,8 @@ func main() {
     if err != nil {
         panic("failed to read user: " + err.Error())
     }
+
+    fmt.Println("Name:", u.Name)
 }
 ```
 
@@ -143,6 +145,8 @@ func main() {
     if err != nil {
         panic("failed to read user: " + err.Error())
     }   
+
+    fmt.Println("Name:", u.Name)
 }
 ```
 
