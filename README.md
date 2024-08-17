@@ -17,6 +17,8 @@ where you know you're writing a raw SQL query. But what you don't expect is
 something like this to be vulnerable:
 
 ```go
+// BAD CODE DO NOT USE!!!
+
 package main
 
 import (
@@ -43,8 +45,9 @@ func main() {
         panic("failed to connect database: " + err.Error())
     }
 	
+	// VERY BAD CODE HERE!!! DO NOT USE!!!
 	var u User
-    err = db.First(&u, os.Args[1]).Error
+    err = db.First(&u, os.Args[1]).Error // <=== VULNERABILITY HERE
     if err != nil {
         panic("failed to read user: " + err.Error())
     }	
