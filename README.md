@@ -73,8 +73,10 @@ go run main.go "1; drop table users"
 The most strident commentary when this issue is raised
 was, ["Absolutely, this is bad API design, but it's not a vulnerability."](https://github.com/go-gorm/gorm/issues/2517#issuecomment-638459166). The Gorm devs' solution
 was to provide the security page linked above. That's not a solution. That's
-negligence. I've given talks on the OWASP Top 10 for more than a decade. This
-exact problem, code injection generally and SQL injection particularly, remains 
+negligence. I've given talks on
+the [OWASP Top 10](https://owasp.org/www-project-top-ten/) for more than a
+decade. This
+exact problem, code injection generally and SQL injection particularly, remains
 one of the top issues in applications today for all this time because devs like
 those working on Gorm have continually avoided taking it seriously.
 
