@@ -116,6 +116,7 @@ import (
     
     "gorm.io/driver/sqlite"
     "gorm.io/gorm"
+    "github.com/google/go-safeweb/safesql"
     "github.com/zostay/gormless"
 )
 
@@ -138,7 +139,7 @@ func main() {
     db := gormless.New(unsafeDB)
     
     var u User
-    err = FirstID(db, &u, os.Args[1]).Error
+    err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error()
     if err != nil {
         panic("failed to read user: " + err.Error())
     }   

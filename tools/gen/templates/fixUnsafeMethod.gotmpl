@@ -1,4 +1,4 @@
-func (db *DB) {{.Method.Name}}({{.PreArgs}}{{if .PreArgs}}, {{end}}s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) {{.Method.Name}}({{.PreArgs}}{{if .PreArgs}}, {{end}}s safesql.TrustedSQLString, args ...interface{}) *DB {
     passthru := []interface{}{s.String()}
     passthru = append(passthru, args...)
     return &DB{unsafe: db.unsafe.{{.Method.Name}}({{.PrePassthru}}{{if .PrePassthru}}, {{end}}passthru...)}

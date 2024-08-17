@@ -75,7 +75,7 @@ func (db *DB) Count(p1 *int64) *gorm.DB {
 	return db.unsafe.Count(p1)
 }
 
-func (db *DB) Create(s *safesql.TrustedSQLString) *DB {
+func (db *DB) Create(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.Create(s.String())}
 }
 
@@ -91,13 +91,13 @@ func (db *DB) DefaultValueOf(p1 *schema.Field) clause.Expression {
 	return db.unsafe.DefaultValueOf(p1)
 }
 
-func (db *DB) Delete(p1 interface{}, s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Delete(p1 interface{}, s safesql.TrustedSQLString, args ...interface{}) *DB {
 	passthru := []interface{}{s.String()}
 	passthru = append(passthru, args...)
 	return &DB{unsafe: db.unsafe.Delete(p1, passthru...)}
 }
 
-func (db *DB) Distinct(args ...*safesql.TrustedSQLString) *DB {
+func (db *DB) Distinct(args ...safesql.TrustedSQLString) *DB {
 	passthru := make([]interface{}, len(args))
 	for i, arg := range args {
 		passthru[i] = arg.String()
@@ -105,11 +105,11 @@ func (db *DB) Distinct(args ...*safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.Distinct(passthru...)}
 }
 
-func (db *DB) Exec(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Exec(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Exec(s.String(), args...)}
 }
 
-func (db *DB) Find(p1 interface{}, s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Find(p1 interface{}, s safesql.TrustedSQLString, args ...interface{}) *DB {
 	passthru := []interface{}{s.String()}
 	passthru = append(passthru, args...)
 	return &DB{unsafe: db.unsafe.Find(p1, passthru...)}
@@ -119,7 +119,7 @@ func (db *DB) FindInBatches(p1 interface{}, p2 int, p3 func(*gorm.DB, int) error
 	return db.unsafe.FindInBatches(p1, p2, p3)
 }
 
-func (db *DB) First(p1 interface{}, s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) First(p1 interface{}, s safesql.TrustedSQLString, args ...interface{}) *DB {
 	passthru := []interface{}{s.String()}
 	passthru = append(passthru, args...)
 	return &DB{unsafe: db.unsafe.First(p1, passthru...)}
@@ -133,27 +133,27 @@ func (db *DB) FirstOrInit(p1 interface{}, p2 ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.FirstOrInit(p1, p2...)}
 }
 
-func (db *DB) Group(s *safesql.TrustedSQLString) *DB {
+func (db *DB) Group(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.Group(s.String())}
 }
 
-func (db *DB) Having(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Having(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Having(s.String(), args...)}
 }
 
-func (db *DB) InnerJoins(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) InnerJoins(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.InnerJoins(s.String(), args...)}
 }
 
-func (db *DB) InstanceSet(s *safesql.TrustedSQLString, arg interface{}) *DB {
+func (db *DB) InstanceSet(s safesql.TrustedSQLString, arg interface{}) *DB {
 	return &DB{unsafe: db.unsafe.InstanceSet(s.String(), arg)}
 }
 
-func (db *DB) Joins(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Joins(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Joins(s.String(), args...)}
 }
 
-func (db *DB) Last(p1 interface{}, s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Last(p1 interface{}, s safesql.TrustedSQLString, args ...interface{}) *DB {
 	passthru := []interface{}{s.String()}
 	passthru = append(passthru, args...)
 	return &DB{unsafe: db.unsafe.Last(p1, passthru...)}
@@ -171,11 +171,11 @@ func (db *DB) Migrator() gorm.Migrator {
 	return db.unsafe.Migrator()
 }
 
-func (db *DB) Model(s *safesql.TrustedSQLString) *DB {
+func (db *DB) Model(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.Model(s.String())}
 }
 
-func (db *DB) Not(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Not(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Not(s.String(), args...)}
 }
 
@@ -187,19 +187,19 @@ func (db *DB) Omit(p1 ...string) *gorm.DB {
 	return db.unsafe.Omit(p1...)
 }
 
-func (db *DB) Or(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Or(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Or(s.String(), args...)}
 }
 
-func (db *DB) Order(s *safesql.TrustedSQLString) *DB {
+func (db *DB) Order(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.Order(s.String())}
 }
 
-func (db *DB) Pluck(s *safesql.TrustedSQLString, arg interface{}) *DB {
+func (db *DB) Pluck(s safesql.TrustedSQLString, arg interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Pluck(s.String(), arg)}
 }
 
-func (db *DB) Preload(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Preload(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Preload(s.String(), args...)}
 }
 
@@ -207,7 +207,7 @@ func (db *DB) QuoteTo(p1 clause.Writer, p2 string) {
 	db.unsafe.QuoteTo(p1, p2)
 }
 
-func (db *DB) Raw(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Raw(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Raw(s.String(), args...)}
 }
 
@@ -215,7 +215,7 @@ func (db *DB) Rollback() *gorm.DB {
 	return db.unsafe.Rollback()
 }
 
-func (db *DB) RollbackTo(s *safesql.TrustedSQLString) *DB {
+func (db *DB) RollbackTo(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.RollbackTo(s.String())}
 }
 
@@ -227,7 +227,7 @@ func (db *DB) Save(p1 interface{}) *gorm.DB {
 	return db.unsafe.Save(p1)
 }
 
-func (db *DB) SavePoint(s *safesql.TrustedSQLString) *DB {
+func (db *DB) SavePoint(s safesql.TrustedSQLString) *DB {
 	return &DB{unsafe: db.unsafe.SavePoint(s.String())}
 }
 
@@ -239,7 +239,7 @@ func (db *DB) Scopes(p1 ...func(*gorm.DB) *gorm.DB) *gorm.DB {
 	return db.unsafe.Scopes(p1...)
 }
 
-func (db *DB) Select(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Select(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Select(s.String(), args...)}
 }
 
@@ -247,15 +247,15 @@ func (db *DB) Session(p1 *gorm.Session) *gorm.DB {
 	return db.unsafe.Session(p1)
 }
 
-func (db *DB) Set(s *safesql.TrustedSQLString, arg interface{}) *DB {
+func (db *DB) Set(s safesql.TrustedSQLString, arg interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Set(s.String(), arg)}
 }
 
-func (db *DB) Table(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Table(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Table(s.String(), args...)}
 }
 
-func (db *DB) Take(p1 interface{}, s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Take(p1 interface{}, s safesql.TrustedSQLString, args ...interface{}) *DB {
 	passthru := []interface{}{s.String()}
 	passthru = append(passthru, args...)
 	return &DB{unsafe: db.unsafe.Take(p1, passthru...)}
@@ -265,11 +265,11 @@ func (db *DB) Unscoped() *gorm.DB {
 	return db.unsafe.Unscoped()
 }
 
-func (db *DB) Update(s *safesql.TrustedSQLString, arg interface{}) *DB {
+func (db *DB) Update(s safesql.TrustedSQLString, arg interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Update(s.String(), arg)}
 }
 
-func (db *DB) UpdateColumn(s *safesql.TrustedSQLString, arg interface{}) *DB {
+func (db *DB) UpdateColumn(s safesql.TrustedSQLString, arg interface{}) *DB {
 	return &DB{unsafe: db.unsafe.UpdateColumn(s.String(), arg)}
 }
 
@@ -281,7 +281,7 @@ func (db *DB) Updates(p1 interface{}) *gorm.DB {
 	return db.unsafe.Updates(p1)
 }
 
-func (db *DB) Where(s *safesql.TrustedSQLString, args ...interface{}) *DB {
+func (db *DB) Where(s safesql.TrustedSQLString, args ...interface{}) *DB {
 	return &DB{unsafe: db.unsafe.Where(s.String(), args...)}
 }
 
