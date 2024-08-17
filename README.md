@@ -143,9 +143,6 @@ func main() {
     if err != nil {
         panic("failed to read user: " + err.Error())
     }   
-
-    // OR the above could be written using google.com/go-safeweb/safesql
-    // err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error
 }
 ```
 
