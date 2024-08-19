@@ -154,8 +154,9 @@ treat it as a raw SQL query.
 
 That is the absolute definition of a SQL injection vulnerability. If the input 
 is safe some of the time, but not all of the, that's SQL injection. They have
-created the illusion of safety. Period. That's not even an opinion, but clear 
-fact, as far as I'm concerned.
+created the illusion of safety where it is most certainly not safe, which is
+what creates a vulnerability. That's not even an opinion, but clear fact, as far
+as I'm concerned.
 
 To me, part of the purpose of using an ORM rather than raw SQL and a language 
 like Go instead of C is to avoid footguns as big as this one. So...
