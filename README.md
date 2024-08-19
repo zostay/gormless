@@ -1,9 +1,71 @@
 # Gormless
 
+The purpose of this library is to provide a wrapper that helps prevent SQL
+injection risks. I do not feel like Gorm takes this risk seriously enough,
+particularly in these methods:
+
+* `First`
+* `Take`
+* `Last`
+* `Find`
+
+But I've layered in the `safesql` library to help prevent SQL injection risks
+in all methods. So, if you want the benefits of using Gorm, but also care about
+security in the way I do, I welcome you to use this library.
+
 This is such an obvious idea that I'm sure it's been done, but I can't find it.
 Gorm Gen will help get you some of the safety that this gives, but this gives it 
 to you with Gorm itself (all the same capabilities, but with a couple minor 
 changes).
+
+# Installation
+
+```sh
+go get github.com/zostay/gormless
+```
+
+# Usage
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    
+    "gorm.io/driver/sqlite"
+    "gorm.io/gorm"
+    "github.com/google/go-safeweb/safesql"
+    "github.com/zostay/gormless"
+)
+
+type User struct {
+    ID   int
+    Name string
+}
+
+func main() {
+    if len(os.Args) != 2 {
+        fmt.Println("usage: ", os.Args[0], " <id>")
+        os.Exit(1)
+    }
+    
+    unsafeDB, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+    if err != nil {
+        panic("failed to connect database: " + err.Error())
+    }
+    
+    db := gormless.New(unsafeDB)
+    
+    var u User
+    err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error()
+    if err != nil {
+        panic("failed to read user: " + err.Error())
+    }   
+
+    fmt.Println("Name:", u.Name)
+}
+```
 
 # The Problem
 
@@ -122,55 +184,6 @@ hande, `safesql` is a brilliantly simple solution to add in, so why not?
 If there's something you cannot do with this library in place without
 calling `Unsafe()` that you believe is safe. Please submit a PR and I will 
 happily add it in, so long as it doesn't reintroduce the vulnerability.
-
-# Installation
-
-```sh
-go get github.com/zostay/gormless
-```
-
-# Usage
-
-```go
-package main
-
-import (
-    "fmt"
-    "os"
-    
-    "gorm.io/driver/sqlite"
-    "gorm.io/gorm"
-    "github.com/google/go-safeweb/safesql"
-    "github.com/zostay/gormless"
-)
-
-type User struct {
-    ID   int
-    Name string
-}
-
-func main() {
-    if len(os.Args) != 2 {
-        fmt.Println("usage: ", os.Args[0], " <id>")
-        os.Exit(1)
-    }
-    
-    unsafeDB, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-    if err != nil {
-        panic("failed to connect database: " + err.Error())
-    }
-    
-    db := gormless.New(unsafeDB)
-    
-    var u User
-    err = db.First(&u, safesql.New("id = ?"), os.Args[1]).Error()
-    if err != nil {
-        panic("failed to read user: " + err.Error())
-    }   
-
-    fmt.Println("Name:", u.Name)
-}
-```
 
 # Callback Support
 
