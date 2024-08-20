@@ -21,7 +21,7 @@ jobs:
       - name: Version Check
         run: |
           if ! grep -q "$RELEASE_VERSION" version.txt; then
-            echo "cmd/version.txt does not match $RELEASE_VERSION!"
+            echo "version.txt does not match $RELEASE_VERSION!"
             exit 1
           fi
       - name: Changes Heading Up-To-Date Check
