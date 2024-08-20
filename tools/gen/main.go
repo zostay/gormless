@@ -200,22 +200,24 @@ func wrapMethod(tmpl *template.Template, m reflect.Method) error {
 
 	var preArgs, prePassthru string
 	tmplName := "simpleMethod.gotmpl"
-	if isUnsafeWithSingleArg(m) && !expectsObjectsMap[m.Name] {
+	switch {
+	case isUnsafeWithSingleArg(m) && !expectsObjectsMap[m.Name]:
 		tmplName = "fixUnsafeMethodSingle.gotmpl"
-	} else if isUnsafeNonVariadic(m) {
+	case isUnsafeNonVariadic(m):
 		tmplName = "fixUnsafeMethodNonVariadic.gotmpl"
 		preArgs = strings.Join(argsIn[1:len(argsIn)-1], ", ")
 		prePassthru = strings.Join(passIn[1:len(passIn)-1], ", ")
-	} else if requiresWrapping(m) {
+	case requiresWrapping(m):
 		tmplName = "gormlessMethod.gotmpl"
 
-		if isUnsafeWithStringArg(m) || expectsStringsFirstMap[m.Name] {
+		switch {
+		case isUnsafeWithStringArg(m) || expectsStringsFirstMap[m.Name]:
 			tmplName = "fixUnsafeMethodWithString.gotmpl"
 			preArgs = strings.Join(argsIn[1:len(argsIn)-1], ", ")
 			prePassthru = strings.Join(passIn[1:len(passIn)-1], ", ")
-		} else if isUnsafe(m) && expectsStringsMap[m.Name] {
+		case isUnsafe(m) && expectsStringsMap[m.Name]:
 			tmplName = "expectsStringsMethod.gotmpl"
-		} else if isUnsafe(m) && !expectsObjectsMap[m.Name] {
+		case isUnsafe(m) && !expectsObjectsMap[m.Name]:
 			tmplName = "fixUnsafeMethod.gotmpl"
 			preArgs = strings.Join(argsIn[:len(argsIn)-1], ", ")
 			prePassthru = strings.Join(passIn[:len(passIn)-1], ", ")
@@ -283,7 +285,7 @@ func makePassIn(t reflect.Type) []string {
 }
 
 func makeArgsOut(t reflect.Type) (string, error) {
-	var args []string
+	args := make([]string, 0, t.NumOut())
 	for i := range t.NumOut() {
 		if isPrivateType(t.Out(i)) {
 			return "", ErrMoreBadDesign

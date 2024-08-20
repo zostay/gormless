@@ -46,3 +46,29 @@ jobs:
             echo 'Release has pre-build steps missing from Prepare workflow!'
             exit 1
           fi
+
+  test-code-generation:
+    name: Code Generation is Clean
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate Code
+        run: go generate ./...
+      - name: Check Generation
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo === START DIFF ===
+            git diff
+            ech === END DIFF ===
+            echo Commit and push again after running: go generate ./...
+            exit 1
+          fi
