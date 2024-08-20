@@ -310,7 +310,6 @@ func isPrivateType(t reflect.Type) bool {
 	}
 
 	return false
-
 }
 
 func handleImport(t reflect.Type) {

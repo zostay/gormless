@@ -7,12 +7,16 @@ package gormless
 import (
 	"context"
 	"database/sql"
+	_ "embed"
 	"github.com/google/go-safeweb/safesql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"gorm.io/gorm/schema"
 	"log"
 )
+
+//go:embed version.txt
+var Version string
 
 type DB struct {
 	unsafe *gorm.DB
