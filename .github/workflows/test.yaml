@@ -42,7 +42,7 @@ jobs:
             echo "Prepare and Release workflows are not in sync!"
             exit 1
           fi
-          if ! yq '.jobs.release.steps.[7]' .github/workflows/release.yaml | grep -q 'Create Release'; then
+          if ! yq '.jobs.release.steps.[6]' .github/workflows/release.yaml | grep -q 'Create Release'; then
             echo 'Release has pre-build steps missing from Prepare workflow!'
             exit 1
           fi
