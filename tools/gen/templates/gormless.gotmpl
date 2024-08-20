@@ -5,9 +5,13 @@ package gormless
 //go:generate go run ./tools/gen/main.go
 
 import (
+    _ "embed"
 {{range .Imports}}    "{{.}}"
 {{end}}
 )
+
+//go:embed version.txt
+var Version string
 
 type DB struct {
     unsafe *gorm.DB
